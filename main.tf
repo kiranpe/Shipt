@@ -37,7 +37,7 @@ data "aws_vpc" "select" {
 #Security group and Access Key
 ###############################
 
-module "sec_grp_access_key" {
+module "access_key" {
  source = "./modules/common"
 }
 
@@ -48,13 +48,7 @@ module "sec_grp_access_key" {
 module "launch_asg" {
   source = "./modules/autoscaling"
 
-  # Launch configuration
-  #
-  # launch_configuration = "my-existing-launch-configuration" # Use the existing launch configuration
-  # create_lc = false # disables creation of launch configuration
-
   lc_name = "my-lc"
-
   image_id        = data.aws_ami.ubuntu.id
   instance_type   = "t2.micro"
   load_balancers  = [module.launch_elb.this_elb_id]
@@ -84,7 +78,7 @@ module "launch_asg" {
   desired_capacity          = 1
   wait_for_capacity_timeout = 0
 
-  depends_on = [module.sec_grp_access_key]
+  depends_on = [module.access_key]
 
   tags = [
     {
@@ -108,7 +102,6 @@ module "launch_elb" {
 
   name = "elb-test"
 
-  internal        = false
   subnet_ids         = ["subnet-07e0f3d0584242fee"]
 
   listener = [
@@ -128,10 +121,17 @@ module "launch_elb" {
     timeout             = 5
   }
  
-  depends_on = [module.sec_grp_access_key]
+  depends_on = [module.access_key]
 
   tags = {
    Name = "test-elb"
   }
 
+}
+
+##########
+#Redis
+##########
+module "redis" {
+  source = "./modules/redis"
 }
