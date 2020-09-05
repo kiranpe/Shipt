@@ -47,34 +47,16 @@ resource "aws_launch_configuration" "this" {
   }
 }
 
-#########################
-#VPC && Subnets Selection
-#########################
-
-data "aws_vpc" "selected" {
-  filter {
-    name   = "tag:Name"
-    values = ["${var.vpc_id}"]
-  }
-}
-
-data "aws_subnet_ids" "subnets" {
-  vpc_id = data.aws_vpc.selected.id
-
-  tags = {
-    Name = "*${var.subnet_type}*"
-  }
-}
-
 ####################
 # Autoscaling group
 ####################
+ 
 resource "aws_autoscaling_group" "this" {
-  count = var.create_asg ? 1 : 0
+  count = var.create_asg && false == var.create_asg_with_initial_lifecycle_hook ? 1 : 0
 
   name                 = var.asg_name
-  vpc_zone_identifier  = data.aws_subnet_ids.subnets.ids
-  launch_configuration = var.create_lc ? element(aws_launch_configuration.this.*.name, 0) : var.launch_configuration
+  launch_configuration = var.create_lc ? element(concat(aws_launch_configuration.this.*.name, [""]), 0) : var.launch_configuration
+  vpc_zone_identifier  = var.vpc_zone_identifier
   max_size             = var.max_size
   min_size             = var.min_size
   desired_capacity     = var.desired_capacity
@@ -95,24 +77,6 @@ resource "aws_autoscaling_group" "this" {
   protect_from_scale_in     = var.protect_from_scale_in
   service_linked_role_arn   = var.service_linked_role_arn
   max_instance_lifetime     = var.max_instance_lifetime
-
-  initial_lifecycle_hook {
-    name                    = var.initial_lifecycle_hook_name
-    lifecycle_transition    = var.initial_lifecycle_hook_lifecycle_transition
-    notification_metadata   = var.initial_lifecycle_hook_notification_metadata
-    heartbeat_timeout       = var.initial_lifecycle_hook_heartbeat_timeout
-    notification_target_arn = var.initial_lifecycle_hook_notification_target_arn
-    role_arn                = var.initial_lifecycle_hook_role_arn
-    default_result          = var.initial_lifecycle_hook_default_result
-  }
-
-  depends_on = [aws_launch_configuration.this]
-
-  tag {
-    key                 = "foo"
-    value               = "bar"
-    propagate_at_launch = true
-  }
 
   lifecycle {
     create_before_destroy = true

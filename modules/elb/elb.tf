@@ -1,28 +1,11 @@
-data "aws_vpc" "select" {
-  filter {
-    name   = "tag:Name"
-    values = ["${var.vpc_id}"]
-  }
-}
-
-data "aws_subnet_ids" "subnet" {
-  vpc_id = data.aws_vpc.select.id
-
-  tags = {
-    Name = "*${var.subnets_type}*"
-  }
-}
-
 resource "aws_elb" "this" {
   count = var.create_elb ? 1 : 0
 
   name        = var.name
   name_prefix = var.name_prefix
-
-  subnets         = data.aws_subnet_ids.subnet.ids
+  subnets     = var.subnet_ids
   internal        = var.internal
-  security_groups = var.security_groups
-
+  security_groups             = var.security_groups
   cross_zone_load_balancing   = var.cross_zone_load_balancing
   idle_timeout                = var.idle_timeout
   connection_draining         = var.connection_draining

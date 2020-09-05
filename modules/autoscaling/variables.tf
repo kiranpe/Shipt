@@ -37,16 +37,16 @@ variable "iam_instance_profile" {
   default     = ""
 }
 
-variable "security_groups" {
-  description = "A list of security group IDs to assign to the launch configuration"
-  type        = list(string)
-  default     = ["myagsec"]
-}
-
 variable "key_name" {
   description = "A list of key names to assign to the launch configuration"
   type        = string
-  default     = "myags_key"
+  default     = "myasg_key"
+}
+
+variable "security_groups" {
+  description = "A list of security group IDs to assign to the launch configuration"
+  type        = list(string)
+  default     = ["sg-04f1aa4c78c5b39cd"]
 }
 
 variable "associate_public_ip_address" {
@@ -313,16 +313,11 @@ variable "recreate_asg_when_lc_changes" {
   default     = false
 }
 
-#VPC  & SUbnet
-###############
-
-variable "vpc_id" {
-  description = "The type of vpc to deploy into.  Based on the 'Name' tag on the VPC.  This is case sensitive!"
-  type        = string
-  default     = "default"
+variable "vpc_zone_identifier" {
+  description = "list of subnet ID's"
+  type        = list(string)
 }
 
-variable "subnet_type" {
-  description = "The type of subnet to use based on the 'Name' tag on the subnet. Example: 'publicsubnet', 'privatesubnet'"
-  type        = string
+variable "ansible_user" {
+  default = "ubuntu"
 }

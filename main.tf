@@ -22,6 +22,17 @@ data "aws_ami" "ubuntu" {
   }
 }
 
+############################
+#Sec Grp && VPC
+############################
+
+data "aws_vpc" "select" {
+  filter {
+    name   = "tag:Name"
+    values = ["my-vpc"]
+  }
+}
+
 ###############################
 #Security group and Access Key
 ###############################
@@ -47,7 +58,6 @@ module "launch_asg" {
   image_id        = data.aws_ami.ubuntu.id
   instance_type   = "t2.micro"
   load_balancers  = [module.launch_elb.this_elb_id]
-  subnet_type     = "subnet1"
 
   ebs_block_device = [
     {
@@ -67,10 +77,11 @@ module "launch_asg" {
 
   # Auto scaling group
   asg_name                  = "my-asg"
+  vpc_zone_identifier       = ["subnet-07e0f3d0584242fee"]
   health_check_type         = "EC2"
-  min_size                  = 0
+  min_size                  = 1 
   max_size                  = 1
-  desired_capacity          = 0
+  desired_capacity          = 1
   wait_for_capacity_timeout = 0
 
   depends_on = [module.sec_grp_access_key]
@@ -98,7 +109,7 @@ module "launch_elb" {
   name = "elb-test"
 
   internal        = false
-  subnets_type     = "subnet2"
+  subnet_ids         = ["subnet-07e0f3d0584242fee"]
 
   listener = [
     {
@@ -117,6 +128,8 @@ module "launch_elb" {
     timeout             = 5
   }
  
+  depends_on = [module.sec_grp_access_key]
+
   tags = {
    Name = "test-elb"
   }
