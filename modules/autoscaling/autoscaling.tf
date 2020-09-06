@@ -11,11 +11,12 @@ resource "aws_launch_configuration" "this" {
   key_name                    = var.key_name
   security_groups             = var.security_groups
   associate_public_ip_address = var.associate_public_ip_address
-  user_data                   = var.user_data
   user_data_base64            = var.user_data_base64
   enable_monitoring           = var.enable_monitoring
   spot_price                  = var.spot_price
   ebs_optimized               = var.ebs_optimized
+  
+  user_data                   = file("${path.module}/install_docker_httpd.sh")
 
   dynamic "ebs_block_device" {
     for_each = var.ebs_block_device

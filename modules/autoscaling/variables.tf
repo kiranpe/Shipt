@@ -22,7 +22,6 @@ variable "lc_name" {
 variable "image_id" {
   description = "The EC2 image ID to launch"
   type        = string
-  default     = "ami-009d40a4d6cc97d00"
 }
 
 variable "instance_type" {
@@ -53,12 +52,6 @@ variable "associate_public_ip_address" {
   description = "Associate a public ip address with an instance in a VPC"
   type        = bool
   default     = false
-}
-
-variable "user_data" {
-  description = "The user data to provide when launching the instance. Do not pass gzip-compressed data via this argument; see user_data_base64 instead."
-  type        = string
-  default     = null
 }
 
 variable "user_data_base64" {
@@ -260,57 +253,6 @@ variable "max_instance_lifetime" {
   description = "The maximum amount of time, in seconds, that an instance can be in service, values must be either equal to 0 or between 604800 and 31536000 seconds."
   type        = number
   default     = 0
-}
-
-#Lifecycle Hook
-###############
-
-variable "initial_lifecycle_hook_name" {
-  description = "The name of initial lifecycle hook"
-  type        = string
-  default     = ""
-}
-
-variable "initial_lifecycle_hook_lifecycle_transition" {
-  description = "The instance state to which you want to attach the initial lifecycle hook"
-  type        = string
-  default     = ""
-}
-
-variable "initial_lifecycle_hook_default_result" {
-  description = "Defines the action the Auto Scaling group should take when the lifecycle hook timeout elapses or if an unexpected failure occurs. The value for this parameter can be either CONTINUE or ABANDON"
-  type        = string
-  default     = "ABANDON"
-}
-
-variable "initial_lifecycle_hook_notification_metadata" {
-  description = "Contains additional information that you want to include any time Auto Scaling sends a message to the notification target"
-  type        = string
-  default     = ""
-}
-
-variable "initial_lifecycle_hook_heartbeat_timeout" {
-  description = "Defines the amount of time, in seconds, that can elapse before the lifecycle hook times out. When the lifecycle hook times out, Auto Scaling performs the action defined in the DefaultResult parameter"
-  type        = string
-  default     = "60"
-}
-
-variable "initial_lifecycle_hook_notification_target_arn" {
-  description = "The ARN of the notification target that Auto Scaling will use to notify you when an instance is in the transition state for the lifecycle hook. This ARN target can be either an SQS queue or an SNS topic"
-  type        = string
-  default     = ""
-}
-
-variable "initial_lifecycle_hook_role_arn" {
-  description = "The ARN of the IAM role that allows the Auto Scaling group to publish to the specified notification target"
-  type        = string
-  default     = ""
-}
-
-variable "recreate_asg_when_lc_changes" {
-  description = "Whether to recreate an autoscaling group when launch configuration changes"
-  type        = bool
-  default     = false
 }
 
 variable "vpc_zone_identifier" {

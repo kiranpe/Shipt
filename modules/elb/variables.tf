@@ -10,21 +10,16 @@ variable "name" {
   default     = null
 }
 
-variable "name_prefix" {
-  description = "The prefix name of the ELB"
-  type        = string
-  default     = null
-}
-
 variable "internal" {
   description = "If true, ELB will be an internal ELB"
   type        = bool
+  default     = false
 }
 
 variable "cross_zone_load_balancing" {
   description = "Enable cross-zone load balancing"
   type        = bool
-  default     = true
+  default     = true 
 }
 
 variable "idle_timeout" {

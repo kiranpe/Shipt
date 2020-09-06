@@ -7,7 +7,6 @@ variable "name" {
 variable "subnet_ids" {
   description = "list of subnets to launch redis cluster"
   type        = list(string)
-  default     = ["subnet-0786e4546bfb1604e"]
 }
   
 variable "cluster_id" {

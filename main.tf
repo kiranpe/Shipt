@@ -71,7 +71,7 @@ module "launch_asg" {
 
   # Auto scaling group
   asg_name                  = "my-asg"
-  vpc_zone_identifier       = ["subnet-07e0f3d0584242fee"]
+  vpc_zone_identifier       = ["subnet-0786e4546bfb1604e"]
   health_check_type         = "EC2"
   min_size                  = 1 
   max_size                  = 1
@@ -134,4 +134,6 @@ module "launch_elb" {
 ##########
 module "redis" {
   source = "./modules/redis"
+
+  subnet_ids           = ["subnet-0786e4546bfb1604e"]
 }
