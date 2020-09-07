@@ -16,7 +16,9 @@ Usage
 To run this example you need to execute:
 
 $ terraform init
-$ terraform plan
-$ terraform apply
 
-Note: This example may create resources which cost money. Run terraform destroy when you don't need these resources.
+$ terraform plan
+
+$ terraform apply --auto-approve
+
+Note: This example may create resources which cost money. Run terraform destroy --auto-approve when you don't need these resources.
