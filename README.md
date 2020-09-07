@@ -21,4 +21,5 @@ $ terraform plan
 
 $ terraform apply --auto-approve
 
-Note: This example may create resources which cost money. Run terraform destroy --auto-approve when you don't need these resources.
+Note: This example may create resources which cost money. Run "terraform destroy --auto-approve" when you don't need these resources.
+                                                               
