@@ -78,4 +78,4 @@ How TO Test:
        Deployed via Terraform..Public Instance
        ip-10-0-0-61
 
-Note: All files need to be modify according to your VPC details and update variables accordingly.
+<b>Note: All files need to be modify according to your VPC details and update variables accordingly.<b>
