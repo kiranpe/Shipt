@@ -11,8 +11,9 @@ Auto Scaling Group with ELB and Redis
 --------------------------------------
 Configuration in this directory creates Launch Configuration, Auto Scaling Group, Elastic Load Balancer, Redis and places Auto Scaling EC2 instances under ELB and places Redis in private subnet.
 
-Usage
-------
+How To Run:
+-----------
+
 To run this you need to execute:
 
 $ terraform init
@@ -21,10 +22,7 @@ $ terraform plan
 
 $ terraform apply --auto-approve
 
-Note: This example may create resources which cost money. Run "terraform destroy --auto-approve" when you don't need these resources.
-
-How To Run:
------------
+Note: This may create resources which cost money. Run "terraform destroy --auto-approve" when you don't need these resources.
 
 VPC:
 ----
