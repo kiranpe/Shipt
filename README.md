@@ -70,9 +70,12 @@ How TO Test:
 
 --> once creation part is complete, copy ELB DNS url and paste it in browser and refresh continously. you will see difference response from public and private instance. 
 
-   Ex: Deployed via Terraform..Public Instance
-   
+   Ex: 
+             
        Deployed via Terraform..Private Instance
        ip-10-0-0-21
+       
+       Deployed via Terraform..Public Instance
+       ip-10-0-0-61
 
 Note: All files need to be modify according to your VPC details and update variables accordingly.
