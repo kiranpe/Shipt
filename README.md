@@ -13,7 +13,7 @@ Configuration in this directory creates Launch Configuration, Auto Scaling Group
 
 Usage
 ------
-To run this example you need to execute:
+To run this you need to execute:
 
 $ terraform init
 
@@ -22,4 +22,47 @@ $ terraform plan
 $ terraform apply --auto-approve
 
 Note: This example may create resources which cost money. Run "terraform destroy --auto-approve" when you don't need these resources.
-                                                               
+
+How To Run:
+-----------
+
+VPC:
+----
+--> First create VPC with 2 public and 2 private subnets and place then in 2 avaiblility zones
+   
+    Ex: private-a  us-east-2a
+        private-b  us-east-2b
+   
+        public-a   us-east-2a
+        public-b   us-east-2b
+ 
+--> Create 2 Routes Tables public and private and point subnets accordingly
+
+--> Create Internet Gateway and add in public route table
+
+--> Create NAT Gateway and point to any one public subnet and then add NAT Gateway in private subnet.
+
+EC2:
+---- 
+
+--> Go to "ec2_instance" folder and lanch EC2 instance in public subnet(modify variables accoring to your VPC subnet details) 
+
+Auto Scaling and ELB:
+---------------------
+
+--> main.tf is main module file for auto scaling group and elb
+
+--> files are in modules/autoscaling and modules/elb
+
+--> we need to update EC2 instance id in ELB variables and modfy the rest of the details according to your VPC and your autoscaling group size
+
+--> This will launch autoscaling group and elb and attach autoscaling group to elb and attach the ec2 instance to elb as well
+
+Redis:
+------
+
+--> main.tf file creates redis DB as well
+
+--> files are in modules/redis folder and variables needs to be modified according to your req. 
+
+Note: All files need to be modify according to your VPC details and update variables accordingly.
