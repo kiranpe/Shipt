@@ -34,7 +34,7 @@ VPC:
         public-a   us-east-2a
         public-b   us-east-2b
  
---> Create 2 Routes Tables public and private and point subnets accordingly
+--> Create 2 Route Tables public and private and point subnets accordingly
 
 --> Create Internet Gateway and add in public route table
 
