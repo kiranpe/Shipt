@@ -33,6 +33,8 @@ VPC:
    
         public-a   us-east-2a
         public-b   us-east-2b
+        
+--> Enable DNS Hostnames in VPC Actions tab and then got to subnets and select public subnets and modify ip assign settings from Action tab and select Auto Assign IP4. This enables public ip and DNS names for only public instance.
  
 --> Create 2 Route Tables public and private and point subnets accordingly
 
