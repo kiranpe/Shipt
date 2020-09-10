@@ -38,7 +38,7 @@ VPC:
 
 --> Create Internet Gateway and add in public route table
 
---> Create NAT Gateway and point to any one public subnet and then add NAT Gateway in private subnet.
+--> Create NAT Gateway and point to any one public subnet and then add NAT Gateway in private route table.
 
 EC2:
 ---- 
