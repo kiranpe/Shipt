@@ -66,7 +66,7 @@ Redis:
 How TO Test:
 -------------
 
---> once creation part is complete, copy ELB DNS url and paste it in browser and refresh continously. you will see difference response from public and private instance. 
+--> once creation part is complete, copy ELB DNS url and paste it in browser and refresh continously. you will see different response from public and private instance. 
 
    Ex: 
              
