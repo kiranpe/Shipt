@@ -82,4 +82,4 @@ How TO Test:
 
 <b>Note: All files need to be modify according to your VPC details and update variables accordingly.<b>
 
-<b>Updated Code Logic for Two Regions.<b>
+<b>Updated Logic for Two Regions.<b>
