@@ -1,6 +1,5 @@
 provider "aws" {
   region = "us-east-1"
-  profile = "Terraform"
 }
 
 ###############################
@@ -41,7 +40,7 @@ module "launch_asg" {
 
   # Auto scaling group
   asg_name                  = "my-asg"
-  vpc_zone_identifier       = ["subnet-17842671", "subnet-72fc8e3f"]
+  vpc_zone_identifier       = ["subnet-1771", "subnet-7c8e3f"]
   health_check_type         = "EC2"
   min_size                  = 2 
   max_size                  = 2 
