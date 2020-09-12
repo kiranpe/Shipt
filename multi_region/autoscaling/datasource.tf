@@ -1,7 +1,3 @@
-variable "vpc_id" {
-   type = list
-   default = ["vpc-04926c79" , "vpc-ab1ebfc0"]
-}
 
 #########################
 #EC2 Image
@@ -26,8 +22,15 @@ data "aws_ami" "ubuntu" {
 #Sec Grp && VPC
 ############################
 
-data "aws_vpc" "select" {
-  id = var.vpc_id
+data "aws_vpc" "default" {
+  default = true
 }
 
+data "aws_subnet_ids" "all" {
+  vpc_id = data.aws_vpc.default.id
+}
 
+data "aws_security_group" "default" {
+  vpc_id = data.aws_vpc.default.id
+  name   = "default"
+}
