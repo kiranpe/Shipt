@@ -19,6 +19,11 @@ variable "lc_name" {
   default     = "myag-lc"
 }
 
+variable "image_id" {
+  description = "The EC2 image ID to launch"
+  type        = string
+}
+
 variable "instance_type" {
   description = "The size of instance to launch"
   type        = string
@@ -37,6 +42,11 @@ variable "key_name" {
   default     = "myasg_key"
 }
 
+variable "security_groups" {
+  description = "A list of security group IDs to assign to the launch configuration"
+  type        = list(string)
+  default     = ["sg-67ed4f5b"]
+}
 
 variable "associate_public_ip_address" {
   description = "Associate a public ip address with an instance in a VPC"
@@ -170,6 +180,18 @@ variable "suspended_processes" {
   default     = []
 }
 
+variable "tags" {
+  description = "A list of tag blocks. Each element should have keys named key, value, and propagate_at_launch."
+  type        = list(map(string))
+  default     = []
+}
+
+variable "tags_as_map" {
+  description = "A map of tags and values in the same format as other resources accept. This will be converted into the non-standard format that the aws_autoscaling_group requires."
+  type        = map(string)
+  default     = {}
+}
+
 variable "placement_group" {
   description = "The name of the placement group into which you'll launch your instances, if any"
   type        = string
@@ -233,6 +255,7 @@ variable "max_instance_lifetime" {
   default     = 0
 }
 
-variable "ansible_user" {
-  default = "ubuntu"
+variable "vpc_zone_identifier" {
+  description = "list of subnet ID's"
+  type        = list(string)
 }

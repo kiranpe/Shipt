@@ -1,9 +1,14 @@
+provider "aws" {
+  region = var.region
+  profile = "Terraform"
+}
+
 ###############################
 #Security group and Access Key
 ###############################
 
 module "access_key" {
- source = "./common"
+ source = "./modules/common"
 }
 
 ############################################
@@ -11,10 +16,10 @@ module "access_key" {
 ############################################
 
 module "launch_asg" {
-  
-  source = "./autoscaling" 
+  source = "./modules/autoscaling"
 
   lc_name = "my-lc"
+  image_id        = data.aws_ami.ubuntu.id
   instance_type   = "t2.micro"
   load_balancers  = [module.launch_elb.this_elb_id]
 
@@ -36,22 +41,38 @@ module "launch_asg" {
 
   # Auto scaling group
   asg_name                  = "my-asg"
+  vpc_zone_identifier       = ["subnet-1771", "subnet-7e3f"]
   health_check_type         = "EC2"
   min_size                  = 2 
   max_size                  = 2 
   desired_capacity          = 2
   wait_for_capacity_timeout = 0
 
+  depends_on = [module.access_key]
+
+  tags = [
+    {
+      key                 = "Environment"
+      value               = "dev"
+      propagate_at_launch = true
+    },
+    {
+      key                 = "Project"
+      value               = "megasecret"
+      propagate_at_launch = true
+    },
+  ]
 }
 
 ######
 # ELB
 ######
 module "launch_elb" {
- 
-  source = "./elb"
+  source = "./modules/elb"
 
   name = "elb-test"
+
+  subnet_ids         = ["subnet-72fe3f", "subnet-178471"]
 
   listener = [
     {
@@ -70,6 +91,7 @@ module "launch_elb" {
     timeout             = 5
   }
   
+  depends_on = [module.access_key]
 
   tags = {
    Name = "test-elb"
@@ -81,7 +103,7 @@ module "launch_elb" {
 #Redis
 ##########
 #module "redis" {
-#  source = "./redis"
+#  source = "./modules/redis"
 
-#  subnet_ids           = ["subnet-17842671"]
+#  subnet_ids           = ["subnet-172671"]
 #}
